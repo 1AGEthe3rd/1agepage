@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="1AGE Page — search the Solana economy." />
+  <title>1AGE Page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header shell">
+    <a class="brand" href="#top" aria-label="1AGE Page home">
+      <img src="assets/1age-logo.png" alt="1AGE" />
+      <span>PAGE</span>
+    </a>
+  </header>
+
+  <main id="top">
+    <section class="hero shell">
+      <p class="eyebrow"><span class="signal-dot"></span> SOLANA CLASSIFIEDS</p>
+      <h1>Search the<br />Solana economy.</h1>
+      <p class="lede">Discover work, services, products, vehicles, games and digital opportunities across the ecosystem.</p>
+
+      <form class="search" id="searchForm" role="search">
+        <input id="searchInput" type="search" placeholder="Search listings..." autocomplete="off" aria-label="Search listings" />
+        <button type="submit" aria-label="Search">⌕</button>
+      </form>
+
+      <nav class="categories" aria-label="Listing categories">
+        <button class="category active" data-category="all">ALL</button>
+        <button class="category" data-category="work">WORK</button>
+        <button class="category" data-category="services">SERVICES</button>
+        <button class="category" data-category="shop">SHOP</button>
+        <button class="category" data-category="autos">AUTOS</button>
+        <button class="category" data-category="games">GAMES</button>
+        <button class="category" data-category="online">ONLINE</button>
+      </nav>
+    </section>
+
+    <section class="explore shell section">
+      <div class="section-heading">
+        <p class="kicker">EXPLORE</p>
+        <h2>Find what moves you.</h2>
+      </div>
+      <div class="quick-filters">
+        <button data-filter="new">NEW LISTINGS <span>→</span></button>
+        <button data-filter="sol">ACCEPTS SOL <span>→</span></button>
+        <button data-filter="remote">REMOTE <span>→</span></button>
+        <button data-filter="near">NEAR YOU <span>→</span></button>
+      </div>
+    </section>
+
+    <section class="listings shell section" id="listingsSection">
+      <div class="section-heading">
+        <p class="kicker"><span class="signal-dot"></span> LIVE</p>
+        <h2>Latest listings.</h2>
+      </div>
+      <div id="listingGrid" class="listing-grid" aria-live="polite"></div>
+      <p id="emptyState" class="empty" hidden>No listings match this search.</p>
+      <button id="viewAll" class="text-action">VIEW ALL LISTINGS →</button>
+    </section>
+
+    <section class="post shell section">
+      <p class="kicker">HAVE SOMETHING TO OFFER?</p>
+      <h2>Put it on Page.</h2>
+      <p>Jobs. Services. Goods. Vehicles. Digital opportunities. One place to be discovered across the Solana economy.</p>
+      <button class="primary-action" id="postButton">+ POST A LISTING</button>
+      <p class="coming" id="postMessage" hidden>Posting opens in a future release. Browsing is live in this preview.</p>
+    </section>
+  </main>
+
+  <footer class="footer shell">
+    <div class="footer-brand">1AGE <span>PAGE</span></div>
+    <p>Part of the 1AGE ecosystem.</p>
+    <nav><a href="#top">ABOUT</a><a href="#top">SAFETY</a><a href="#top">TERMS</a><a href="#top">1AGE</a></nav>
+    <small>© 2026 1AGE</small>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
