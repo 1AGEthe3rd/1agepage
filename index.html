@@ -1,82 +1,10 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#000000" />
-  <meta name="description" content="1AGE Page — search the Solana economy." />
-  <title>1AGE Page</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <header class="site-header shell">
-    <a class="brand" href="#top" aria-label="1AGE Page home">
-      <img src="1age-logo.png" alt="1AGE" />
-      <span>PAGE</span>
-    </a>
-  </header>
-
-  <main id="top">
-    <section class="hero shell">
-      <p class="eyebrow"><span class="signal-dot"></span> SOLANA CLASSIFIEDS</p>
-      <h1>Search the<br />Solana economy.</h1>
-      <p class="lede">Discover work, services, products, vehicles, games and digital opportunities across the ecosystem.</p>
-
-      <form class="search" id="searchForm" role="search">
-        <input id="searchInput" type="search" placeholder="Search listings..." autocomplete="off" aria-label="Search listings" />
-        <button type="submit" aria-label="Search">⌕</button>
-      </form>
-
-      <nav class="categories" aria-label="Listing categories">
-        <button class="category active" data-category="all">ALL</button>
-        <button class="category" data-category="work">WORK</button>
-        <button class="category" data-category="services">SERVICES</button>
-        <button class="category" data-category="shop">SHOP</button>
-        <button class="category" data-category="autos">AUTOS</button>
-        <button class="category" data-category="games">GAMES</button>
-        <button class="category" data-category="online">ONLINE</button>
-      </nav>
-    </section>
-
-    <section class="explore shell section">
-      <div class="section-heading">
-        <p class="kicker">EXPLORE</p>
-        <h2>Find what moves you.</h2>
-      </div>
-      <div class="quick-filters">
-        <button data-filter="new">NEW LISTINGS <span>→</span></button>
-        <button data-filter="sol">ACCEPTS SOL <span>→</span></button>
-        <button data-filter="remote">REMOTE <span>→</span></button>
-        <button data-filter="near">NEAR YOU <span>→</span></button>
-      </div>
-    </section>
-
-    <section class="listings shell section" id="listingsSection">
-      <div class="section-heading">
-        <p class="kicker"><span class="signal-dot"></span> LIVE</p>
-        <h2>Latest listings.</h2>
-      </div>
-      <div id="listingGrid" class="listing-grid" aria-live="polite"></div>
-      <p id="emptyState" class="empty" hidden>No listings match this search.</p>
-      <button id="viewAll" class="text-action">VIEW ALL LISTINGS →</button>
-    </section>
-
-    <section class="post shell section">
-      <p class="kicker">HAVE SOMETHING TO OFFER?</p>
-      <h2>Put it on Page.</h2>
-      <p>Jobs. Services. Goods. Vehicles. Digital opportunities. One place to be discovered across the Solana economy.</p>
-      <button class="primary-action" id="postButton">+ POST A LISTING</button>
-      <p class="coming" id="postMessage" hidden>Posting opens in a future release. Browsing is live in this preview.</p>
-    </section>
-  </main>
-
-  <footer class="footer shell">
-    <div class="footer-brand">1AGE <span>PAGE</span></div>
-    <p>Part of the 1AGE ecosystem.</p>
-    <nav><a href="#top">ABOUT</a><a href="#top">SAFETY</a><a href="#top">TERMS</a><a href="#top">1AGE</a></nav>
-    <small>© 2026 1AGE</small>
-  </footer>
-
-  <script src="app.js"></script>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>1AGE Page — Your profile across 1AGE</title><link rel="stylesheet" href="style.css"></head><body>
+<header><button class="brand" data-view="directory"><img src="1age-logo.png" alt="1AGE"><span>PAGE</span></button><nav><button data-view="directory" class="active">DISCOVER</button><button data-view="messages">MESSAGES <i></i></button><button data-view="mypage">MY PAGE</button></nav></header>
+<main>
+<section id="directory" class="view active"><div class="hero"><p class="signal">THE 1AGE DIRECTORY</p><h1>Find your people<br>in Solana.</h1><p class="intro">Discover people, creators, developers, projects, businesses and communities across the ecosystem.</p><div class="search"><input id="search" placeholder="Search names, skills, projects..."><button>↗</button></div><div id="filters" class="filters"></div></div>
+<div class="section"><p class="signal">DISCOVER</p><h2>PAGES</h2><small id="count"></small><div id="grid" class="grid"></div></div>
+<div class="cta"><div class="glow"></div><p class="signal">BE DISCOVERABLE</p><h2>Create your Page.</h2><p>Your profile across 1AGE. One identity for the ecosystem.</p><button class="primary" id="create">CREATE YOUR PAGE ↗</button></div></section>
+<section id="profile" class="view"><button class="back" data-view="directory">← DIRECTORY</button><div id="profileBody"></div></section>
+<section id="messages" class="view"><div class="title"><p class="signal">YOUR 1AGE</p><h1>MESSAGES</h1><p>One inbox. Every 1AGE experience.</p></div><div id="inbox" class="inbox"></div></section>
+<section id="mypage" class="view"><div class="title"><p class="signal">YOUR 1AGE</p><h1>MY PAGE</h1></div><div class="my"><div class="avatar big">1J</div><p class="signal">BUILDER</p><h2>1AGE James</h2><p class="handle">@james</p><p class="bio">Building 1AGE — a search and discovery ecosystem for Solana.</p><div class="tags"><span>1AGE</span><span>SOLANA</span><span>DESIGN</span><span>BUILDING</span></div><button class="primary">EDIT PAGE</button></div><div class="stats"><button data-view="messages"><b>4</b><span>MESSAGES</span></button><button><b>12</b><span>SAVED</span></button><button><b>08</b><span>ACTIVITY</span></button><button><b>03</b><span>PROGRESS</span></button></div><div class="eco"><p class="signal">ACROSS 1AGE</p><div><span>EXCHANGE</span><b>2 active</b></div><div><span>QUEST</span><b>Level 03</b></div><div><span>GAMES</span><b>4 played</b></div><div><span>SPACE</span><b>@james</b></div></div></section>
+</main><footer><b>1AGE PAGE</b><span>Your profile across 1AGE.</span><p>1AGE · PAGE · EXCHANGE · SPACE · GAMES · QUEST</p><small>PROTOTYPE v0.2 · DEMO DATA</small></footer><script src="app.js"></script></body></html>
