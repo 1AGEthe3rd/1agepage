@@ -1,10 +1,62 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#000"><title>1AGE Page — Your profile across 1AGE</title><link rel="stylesheet" href="style.css"></head><body>
-<header><button class="brand" data-view="directory"><img src="1age-logo.png" alt="1AGE"><span>PAGE</span></button><nav><button data-view="directory" class="active">DISCOVER</button><button data-view="messages">MESSAGES <i></i></button><button data-view="mypage">MY PAGE</button></nav></header>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>1AGE Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+<header>
+<button class="brand" data-screen="home"><img src="1age-logo.png" alt="1AGE"><span>PAGE</span></button>
+<button class="mini">1J</button>
+</header>
 <main>
-<section id="directory" class="view active"><div class="hero"><p class="signal">THE 1AGE DIRECTORY</p><h1>Find your people<br>in Solana.</h1><p class="intro">Discover people, creators, developers, projects, businesses and communities across the ecosystem.</p><div class="search"><input id="search" placeholder="Search names, skills, projects..."><button>↗</button></div><div id="filters" class="filters"></div></div>
-<div class="section"><p class="signal">DISCOVER</p><h2>PAGES</h2><small id="count"></small><div id="grid" class="grid"></div></div>
-<div class="cta"><div class="glow"></div><p class="signal">BE DISCOVERABLE</p><h2>Create your Page.</h2><p>Your profile across 1AGE. One identity for the ecosystem.</p><button class="primary" id="create">CREATE YOUR PAGE ↗</button></div></section>
-<section id="profile" class="view"><button class="back" data-view="directory">← DIRECTORY</button><div id="profileBody"></div></section>
-<section id="messages" class="view"><div class="title"><p class="signal">YOUR 1AGE</p><h1>MESSAGES</h1><p>One inbox. Every 1AGE experience.</p></div><div id="inbox" class="inbox"></div></section>
-<section id="mypage" class="view"><div class="title"><p class="signal">YOUR 1AGE</p><h1>MY PAGE</h1></div><div class="my"><div class="avatar big">1J</div><p class="signal">BUILDER</p><h2>1AGE James</h2><p class="handle">@james</p><p class="bio">Building 1AGE — a search and discovery ecosystem for Solana.</p><div class="tags"><span>1AGE</span><span>SOLANA</span><span>DESIGN</span><span>BUILDING</span></div><button class="primary">EDIT PAGE</button></div><div class="stats"><button data-view="messages"><b>4</b><span>MESSAGES</span></button><button><b>12</b><span>SAVED</span></button><button><b>08</b><span>ACTIVITY</span></button><button><b>03</b><span>PROGRESS</span></button></div><div class="eco"><p class="signal">ACROSS 1AGE</p><div><span>EXCHANGE</span><b>2 active</b></div><div><span>QUEST</span><b>Level 03</b></div><div><span>GAMES</span><b>4 played</b></div><div><span>SPACE</span><b>@james</b></div></div></section>
-</main><footer><b>1AGE PAGE</b><span>Your profile across 1AGE.</span><p>1AGE · PAGE · EXCHANGE · SPACE · GAMES · QUEST</p><small>PROTOTYPE v0.2 · DEMO DATA</small></footer><script src="app.js"></script></body></html>
+<section id="home" class="screen active">
+<div class="identity">
+<div class="avatar-wrap"><div class="avatar big">1J</div><i class="online"></i></div>
+<h1>1AGE James</h1><p class="handle">@james</p><p class="bio">Building 1AGE.</p>
+<button class="pill">EDIT PAGE</button>
+</div>
+<div class="tiles">
+<button class="tile live" data-screen="messages"><span class="icon">••</span><b class="badge">4</b><strong>Messages</strong><small>New conversations</small></button>
+<button class="tile" data-screen="discover"><span class="icon">⌕</span><strong>Discover</strong><small>Find Pages</small></button>
+<button class="tile"><span class="icon">◇</span><strong>Saved</strong><small>12 items</small></button>
+<button class="tile"><span class="icon">↗</span><strong>Activity</strong><small>Recent</small></button>
+</div>
+<div class="identity-card"><span class="eyebrow dark">YOUR IDENTITY</span><h2>Across 1AGE</h2><div class="orb"></div><div class="chips"><span>EXCHANGE</span><span>QUEST</span><span>GAMES</span><span>SPACE</span></div></div>
+<div class="settings">
+<button><span>Wallet</span><small>Not connected</small><b>›</b></button>
+<button><span>Page settings</span><small>Public</small><b>›</b></button>
+<button><span>1AGE+</span><small>Free</small><b>›</b></button>
+</div>
+</section>
+
+<section id="discover" class="screen">
+<div class="screen-head"><button class="back" data-screen="home">‹</button><div><span class="eyebrow">DISCOVER</span><h1>Find a Page</h1></div></div>
+<div class="search"><span>⌕</span><input id="searchInput" placeholder="Name, @username, skill..."></div>
+<div id="results" class="results"></div>
+</section>
+
+<section id="profile" class="screen">
+<div class="screen-head"><button class="back" data-screen="discover">‹</button><div><span class="eyebrow">PAGE</span><h1>Profile</h1></div></div>
+<div id="profileBody"></div>
+</section>
+
+<section id="messages" class="screen">
+<div class="screen-head"><button class="back" data-screen="home">‹</button><div><span class="eyebrow">INBOX</span><h1>Messages</h1></div></div>
+<div class="tabs"><button class="on">ALL</button><button>PAGE</button><button>EXCHANGE</button><button>SPACE</button></div>
+<div id="inbox" class="inbox"></div>
+</section>
+</main>
+
+<nav class="dock">
+<button data-screen="home" class="active"><span>⌂</span><small>Page</small></button>
+<button data-screen="discover"><span>⌕</span><small>Discover</small></button>
+<button data-screen="messages" class="dockmsg"><span>••</span><i></i><small>Messages</small></button>
+</nav>
+</div>
+<script src="app.js"></script>
+</body></html>
