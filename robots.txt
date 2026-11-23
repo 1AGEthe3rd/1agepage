@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://1age.com/sitemap.xml
+Disallow: /
