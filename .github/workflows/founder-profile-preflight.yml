@@ -30,7 +30,7 @@ jobs:
                            'not yet a registered or verified Page account'):
               assert expected in page, f'Founder preview missing: {expected}'
           assert '<iframe' in page, 'Public profile must remain within the 3D World environment'
-          assert '/u/1agejames/' in app, 'Founder's profile link must exist in Page app'
+          assert '/u/1agejames/' in app, "Founder profile link must exist in Page app"
           assert 'localIdentityTest' in script and "'localhost','127.0.0.1'" in script, 'Public password guard missing'
           assert "'signin').hidden=!localIdentityTest||signed" in script, 'Static website must not show demo login'
           for forbidden in ('<input', 'password', 'session_token', 'private_key', 'secret_key'):
