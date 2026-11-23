@@ -1,0 +1,36 @@
+name: Verify founder Page preview is published
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/founder-live-audit.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check hosted HTTPS founder profile
+        run: |
+          python3 - <<'PY'
+          import urllib.request,time
+          url="https://1age.page/u/1agejames/"
+          for attempt in range(8):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(url,headers={"User-Agent":"1AGE-Founder-Profile-Audit"}),timeout=18) as response:
+                      body=response.read().decode("utf-8","replace")
+                      assert response.status==200
+                      assert "@1agejames" in body and "https://1age.world/?platform=page" in body
+                      assert "not yet a registered or verified Page account" in body
+                      print("PASS: Published Page founder preview is accessible over HTTPS; account remains unregistered.")
+                      break
+              except Exception as e:
+                  print("Attempt",attempt+1,"waiting for Pages deployment:",str(e))
+                  if attempt==7:raise
+                  time.sleep(9)
+          PY
