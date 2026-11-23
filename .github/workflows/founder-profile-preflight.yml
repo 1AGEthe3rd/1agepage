@@ -1,0 +1,41 @@
+name: Founder 3D Page profile preflight
+
+on:
+  pull_request:
+    paths:
+      - 'u/1agejames/**'
+      - 'application.html'
+      - 'page.js'
+      - '.github/workflows/founder-profile-preflight.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  founder-preview:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check public preview routing and test-only authentication guard
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          page=Path('u/1agejames/index.html').read_text()
+          app=Path('application.html').read_text()
+          script=Path('page.js').read_text()
+          for expected in ('@1agejames','1AGE James','https://1age.world/?platform=page',
+                           'https://github.com/1AGEthe3rd','noindex,nofollow',
+                           'not yet a registered or verified Page account'):
+              assert expected in page, f'Founder preview missing: {expected}'
+          assert '<iframe' in page, 'Public profile must remain within the 3D World environment'
+          assert '/u/1agejames/' in app, "Founder profile link must exist in Page app"
+          assert 'localIdentityTest' in script and "'localhost','127.0.0.1'" in script, 'Public password guard missing'
+          assert "'signin').hidden=!localIdentityTest||signed" in script, 'Static website must not show demo login'
+          for forbidden in ('<input', 'password', 'session_token', 'private_key', 'secret_key'):
+              assert forbidden not in page, f'Shareable public page cannot contain {forbidden}'
+          print('Founder 3D profile preview preflight passed. Live account still requires hosted authentication.')
+          PY
+      - name: Check JavaScript syntax
+        run: node --check page.js
