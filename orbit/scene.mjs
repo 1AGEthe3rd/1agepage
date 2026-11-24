@@ -53,30 +53,6 @@ function stars() {
   return new THREE.Points(geometry, new THREE.PointsMaterial({ size: .09, vertexColors: true, opacity: .86, transparent: true, depthWrite: false }));
 }
 
-function coreTexture() {
-  return texture(768, 384, (ctx, w, h) => {
-    ctx.fillStyle = '#052019';
-    ctx.fillRect(0, 0, w, h);
-    const next = random(22);
-    for (let i = 0; i < 60; i++) {
-      const x = next() * w, y = next() * h, r = 20 + next() * 140;
-      const glow = ctx.createRadialGradient(x, y, 0, x, y, r);
-      glow.addColorStop(0, i % 4 ? 'rgba(37,166,111,.12)' : 'rgba(18,103,146,.28)');
-      glow.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = glow;
-      ctx.fillRect(x - r, y - r, r * 2, r * 2);
-    }
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#66ffb544';
-    for (let x = 0; x < w; x += 32) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-    for (let y = 0; y < h; y += 24) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-    for (let i = 0; i < 1300; i++) {
-      ctx.fillStyle = i % 13 ? '#9bffd94b' : '#c2ffe8bd';
-      ctx.fillRect(next() * w, next() * h, i % 13 ? 1 : 2, 1);
-    }
-  });
-}
-
 function glowSprite(color, scale) {
   const map = texture(128, 128, ctx => {
     const gradient = ctx.createRadialGradient(64, 64, 1, 64, 64, 64);
@@ -129,10 +105,10 @@ function iconTexture(icon) {
   });
 }
 
-export function buildScene(host, founder, logoUrl, onPick, onStatus, onFrame) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'low-power' });
+export function buildScene(host, founder, assets, onPick, onStatus, onFrame) {
+  const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
   renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.setClearColor(0x010403);
+  renderer.setClearColor(0x010403, 0);
   host.append(renderer.domElement);
 
   const scene = new THREE.Scene();
@@ -152,13 +128,15 @@ export function buildScene(host, founder, logoUrl, onPick, onStatus, onFrame) {
   scene.add(key, fill);
 
   const identity = new THREE.Group();
-  const nucleus = sphere(1.62, 0x9bffe0, .32);
-  nucleus.material.map = coreTexture();
-  nucleus.material.emissive.setHex(0x0e7357);
-  nucleus.material.emissiveMap = nucleus.material.map;
-  nucleus.material.emissiveIntensity = .6;
-  identity.add(nucleus, glowSprite(green, 10));
-  const logoMap = new THREE.TextureLoader().load(founder.avatar || logoUrl);
+  const globeMap = new THREE.TextureLoader().load(assets.earthTexture);
+  globeMap.colorSpace = THREE.SRGBColorSpace;
+  const earth = new THREE.Mesh(
+    new THREE.SphereGeometry(1.62, 48, 32),
+    new THREE.MeshBasicMaterial({ map: globeMap }),
+  );
+  const earthHalo = glowSprite(green, 8);
+  identity.add(earth, earthHalo);
+  const logoMap = new THREE.TextureLoader().load(founder.avatar || assets.logo);
   logoMap.colorSpace = THREE.SRGBColorSpace;
   const insignia = markSprite(logoMap, 1.22);
   identity.add(insignia);
@@ -267,18 +245,19 @@ export function buildScene(host, founder, logoUrl, onPick, onStatus, onFrame) {
   }
   function render(now) {
     if (disposed || contextLost) return;
-    const dt = Math.min(.05, (now - (last || now)) / 1000);
+    const elapsed = (now - (last || now)) / 1000;
+    const dt = Math.min(.05, elapsed);
     last = now;
     const destination = cameraTarget.copy(view === 'identity' ? center : discoveryCenter);
     destination.y = view === 'identity' ? cameraLift : 0;
     if (reduced.matches) target.copy(destination);
-    else target.lerp(destination, 1 - Math.exp(-6 * dt));
+    else target.lerp(destination, 1 - Math.exp(-6 * elapsed));
     cameraDirection.set(Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch));
     camera.position.copy(cameraDirection).multiplyScalar(fittedDistance * zoom).add(target);
     camera.lookAt(target);
     camera.updateMatrixWorld();
     if (!reduced.matches) {
-      nucleus.rotation.y += dt * .15;
+      if (earth.visible) earth.rotation.y += dt * .15;
       orbitAccent.rotation.z += dt * .07;
       resultRing.rotation.z += dt * .21;
     }
@@ -298,7 +277,11 @@ export function buildScene(host, founder, logoUrl, onPick, onStatus, onFrame) {
     resultGroup.visible = shown;
     scene.updateMatrixWorld();
     for (const entry of planets) positionLabel(entry.item.id, entry.node, .38);
-    positionLabel('founder', result, .67);
+    if (view === 'discovery' && target.distanceToSquared(discoveryCenter) < .08) {
+      positionLabel('founder', result, .67);
+    } else {
+      project.delete('founder');
+    }
     renderer.render(scene, camera);
     onFrame(project);
     frame = requestAnimationFrame(render);
@@ -365,6 +348,14 @@ export function buildScene(host, founder, logoUrl, onPick, onStatus, onFrame) {
   frame = requestAnimationFrame(render);
 
   return {
+    useWorldBackdrop(value) {
+      earth.visible = !value;
+      earthHalo.visible = !value;
+      insignia.visible = !value;
+      scanRing.visible = !value;
+      rim.visible = !value;
+      background.visible = !value;
+    },
     moveCamera, zoomCamera, changeView,
     setSelected(id) { selected = id; },
     showResult(value) { shown = value; },

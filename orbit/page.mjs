@@ -11,6 +11,7 @@ const closeIcon = icon('<path d="m6 6 12 12M18 6 6 18"/>');
 const outgoing = icon('<path d="M8 16 17 7M8 7h9v9"/>');
 app.classList.add('ready');
 app.innerHTML = `
+  <div class="world-layer" aria-hidden="true" inert></div>
   <div class="stage" aria-hidden="true"></div>
   <header class="mast">
     <a class="wordmark"><span aria-hidden="true"></span>1AGE Page</a>
@@ -102,14 +103,19 @@ labelNodes.set('founder', founderLink);
 
 function status(message) {
   app.classList.toggle('no-webgl', Boolean(message));
+  if (message) {
+    for (const element of labelNodes.values()) element.style.visibility = '';
+  }
   notice.textContent = message;
   notice.hidden = !message;
 }
 
 function placeLabels(positions) {
   for (const [id, element] of labelNodes) {
-    if (element.hidden || !positions.has(id)) continue;
+    if (element.hidden) continue;
     const pos = positions.get(id);
+    element.style.visibility = pos && pos.visible ? '' : 'hidden';
+    if (!pos || !pos.visible) continue;
     const x = Math.min(stage.clientWidth - 53, Math.max(53, pos.x));
     const bottomSpace = stage.clientHeight < 500 ? 140 : stage.clientWidth < 600 ? 245 : 155;
     const y = Math.min(stage.clientHeight - bottomSpace, Math.max(68, pos.y));
@@ -183,11 +189,42 @@ function changeView(next, focusSearch = false) {
   if (discovering && focusSearch) search.focus({ preventScroll: true });
 }
 
+const worldLayer = get('.world-layer');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+const useStaticWorld = matchMedia('(prefers-reduced-data: reduce)');
+let worldFrame;
+
+function refreshWorldBackdrop() {
+  if (reducedMotion.matches || useStaticWorld.matches) {
+    worldFrame?.remove();
+    worldFrame = null;
+    app.classList.remove('has-world');
+    scene?.useWorldBackdrop(false);
+    return;
+  }
+  if (worldFrame) return;
+  const frame = document.createElement('iframe');
+  frame.title = '1AGE World background';
+  frame.tabIndex = -1;
+  frame.allow = "gamepad 'none'";
+  frame.src = pageLinks.worldScene;
+  frame.addEventListener('load', () => {
+    if (frame !== worldFrame) return;
+    app.classList.add('has-world');
+    scene?.useWorldBackdrop(true);
+  });
+  worldFrame = frame;
+  worldLayer.append(frame);
+}
+
 try {
-  scene = buildScene(stage, founder, pageLinks.logo, id => select(id, true), status, placeLabels);
+  scene = buildScene(stage, founder, pageLinks, id => select(id, true), status, placeLabels);
 } catch {
   status('3D is unavailable on this device. You can still use the profile links.');
 }
+refreshWorldBackdrop();
+reducedMotion.addEventListener('change', refreshWorldBackdrop);
+useStaticWorld.addEventListener('change', refreshWorldBackdrop);
 
 menuButton.addEventListener('click', () => setMenu(menu.hidden));
 document.addEventListener('pointerdown', event => {
@@ -252,5 +289,8 @@ const unsubscribe = subscribeInput((input, dt) => {
 addEventListener('pagehide', event => {
   if (event.persisted) return;
   unsubscribe();
+  reducedMotion.removeEventListener('change', refreshWorldBackdrop);
+  useStaticWorld.removeEventListener('change', refreshWorldBackdrop);
+  worldFrame?.remove();
   scene?.dispose();
 });

@@ -4,6 +4,8 @@ export const pageLinks = {
   founder: new URL('u/1agejames/', root).href,
   tools: new URL('application.html', root).href,
   logo: new URL('shared/1age-logo.svg', root).href,
+  earthTexture: new URL('shared/world-surface.png', root).href,
+  worldScene: 'https://1age.world/?platform=page',
 };
 
 export const founder = {

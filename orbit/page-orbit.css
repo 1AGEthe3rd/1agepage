@@ -8,7 +8,15 @@ a{color:inherit;text-decoration:none}
 button{color:inherit;cursor:pointer}
 :focus-visible{outline:2px solid var(--active);outline-offset:4px}
 #page.ready{position:fixed;inset:0;overflow:hidden;background:#000}
-.stage,.scene-labels{position:absolute;inset:0}
+/* World draws the sky and Earth. Page's transparent canvas owns input and orbit objects. */
+.world-layer,.stage,.scene-labels{position:absolute;inset:0}
+.world-layer{inset:8% 0 12%;pointer-events:none;overflow:hidden;opacity:0;filter:brightness(.86);mask-image:linear-gradient(to bottom,transparent 6%,#000 19%,#000 45%,#0009 56%,transparent 86%),linear-gradient(to right,transparent,#000 12%,#000 88%,transparent);mask-composite:intersect;transition:opacity .35s}
+.world-layer iframe{display:block;width:100%;height:100%;border:0;pointer-events:none}
+.world-layer::after{content:"";position:absolute;inset:32% 0 0 66%;background:linear-gradient(to right,transparent,#000 26%);mask-image:linear-gradient(transparent,#000 17%);pointer-events:none}
+@media(max-width:600px) and (orientation:portrait){.world-layer::after{left:74%}}
+.has-world .world-layer{opacity:1}
+.has-world[data-view="discovery"] .world-layer{opacity:.3}
+@media(prefers-reduced-motion:reduce){.world-layer{transition:none}}
 .stage canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
 .stage canvas:active{cursor:grabbing}
 .scene-labels{pointer-events:none}
