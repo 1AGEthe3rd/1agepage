@@ -2,60 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#000000">
   <meta name="robots" content="noindex,nofollow">
-  <meta name="description" content="3D preview of the founder's 1AGE Page profile. Account registration is not yet enabled.">
-  <title>1AGE James · 1AGE Page profile preview</title>
+  <meta name="description" content="Orbital demonstration profile for 1AGE James.">
+  <title>1AGE James · 1AGE Page</title>
   <link rel="icon" href="../../shared/1age-logo.svg" type="image/svg+xml">
-  <style>
-    :root{color-scheme:dark;--green:#1bfd9c;--white:#e2ffdc;--edge:rgba(27,253,156,.5);font-family:system-ui,-apple-system,sans-serif}
-    *{box-sizing:border-box}
-    body{background:#000;color:var(--white);margin:0;min-height:100svh;overflow:hidden;touch-action:pan-y}
-    .world{position:fixed;inset:0;width:100%;height:100%;border:0;background:#000}
-    .holograms{position:fixed;inset:0;pointer-events:none;perspective:1000px}
-    .identity{position:absolute;top:14%;left:50%;width:min(420px,84vw);transform:translateX(-50%) rotateX(-8deg);text-align:center;background:linear-gradient(135deg,rgba(2,22,15,.38),rgba(0,5,7,.30));border:1px solid var(--edge);border-radius:24px;box-shadow:0 0 36px rgba(27,253,156,.11),inset 0 0 36px rgba(27,253,156,.07);padding:16px 24px;backdrop-filter:blur(3px)}
-    .identity:before{content:"";position:absolute;inset:9px;border:1px solid rgba(27,253,156,.15);border-radius:17px;pointer-events:none}
-    .name{display:block;font-size:clamp(1.5rem,4.1vw,2.5rem);font-weight:750;letter-spacing:.04em;color:var(--white);text-shadow:0 0 25px rgba(27,253,156,.5)}
-    .handle{display:block;color:var(--green);font-size:clamp(.9rem,2.5vw,1.1rem);margin:.25rem 0 .55rem;letter-spacing:.07em}
-    .bio{font-size:clamp(.78rem,2vw,.95rem);line-height:1.4;margin:0;color:var(--white)}
-    .orbit{position:absolute;top:54%;left:50%;width:min(560px,85vw);height:220px;transform:translate(-50%,-50%);transform-style:preserve-3d}
-    .portal{position:absolute;left:50%;top:50%;width:91px;height:91px;margin:-45px;text-decoration:none;border:2px solid var(--edge);border-radius:50%;background:radial-gradient(circle at 35% 28%,rgba(140,255,196,.38),rgba(27,253,156,.12) 35%,rgba(0,10,10,.91) 80%);box-shadow:inset -13px -15px 23px rgba(0,0,0,.7),0 0 20px rgba(27,253,156,.24);color:var(--white);display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:.12rem;font-size:.76rem;font-weight:650;pointer-events:auto;transition:scale .18s,box-shadow .18s;touch-action:manipulation}
-    .portal svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
-    .portal:active,.portal:focus-visible,.portal:hover{scale:1.12;box-shadow:0 0 35px rgba(27,253,156,.65);outline:2px solid var(--white);outline-offset:5px}
-    .portal:nth-child(1){transform:translate3d(-210px,-18px,30px)}
-    .portal:nth-child(2){transform:translate3d(-75px,65px,70px)}
-    .portal:nth-child(3){transform:translate3d(80px,65px,70px)}
-    .portal:nth-child(4){transform:translate3d(210px,-18px,30px)}
-    .mark{position:fixed;top:16px;left:50%;transform:translateX(-50%);width:44px;height:44px;pointer-events:auto;border-radius:50%;border:1px solid var(--edge);background:#000;display:grid;place-items:center}
-    .mark img{width:36px;height:36px}
-    .notice{position:absolute;bottom:11px;left:50%;transform:translateX(-50%);width:max-content;max-width:90vw;text-align:center;color:rgba(226,255,220,.75);font-size:11px;line-height:1.4;background:rgba(0,0,0,.6);padding:5px 9px;border-radius:14px}
-    @media(max-width:660px){.identity{top:12%;width:min(348px,83vw);padding:15px 18px}.orbit{top:51%;height:240px}.portal{width:78px;height:78px;margin:-39px;font-size:.72rem}.portal svg{width:22px;height:22px}
-      .portal:nth-child(1){transform:translate3d(-104px,-42px,20px)}
-      .portal:nth-child(2){transform:translate3d(-108px,65px,50px)}
-      .portal:nth-child(3){transform:translate3d(108px,65px,50px)}
-      .portal:nth-child(4){transform:translate3d(104px,-42px,20px)}
-      .notice{bottom:8px;font-size:9.5px}}
-    @media(max-height:560px){.identity{top:9%;padding:9px 16px}.bio{display:none}.orbit{top:52%;height:135px}.portal{width:65px;height:65px;margin:-32px;font-size:11px}.portal:nth-child(1){transform:translate3d(-165px,0,10px)}.portal:nth-child(2){transform:translate3d(-56px,18px,60px)}.portal:nth-child(3){transform:translate3d(56px,18px,60px)}.portal:nth-child(4){transform:translate3d(165px,0,10px)}}
-    @media(prefers-reduced-motion:no-preference){.identity{animation:arrive .65s ease-out both}@keyframes arrive{from{opacity:0;transform:translateX(-50%) translateY(25px) rotateX(-12deg)}to{opacity:1;transform:translateX(-50%) rotateX(-8deg)}}}
-  </style>
+  <link rel="stylesheet" href="../../orbit/page-orbit.css">
+  <script type="module" src="../../orbit/page.mjs"></script>
 </head>
 <body>
-  <iframe class="world" src="https://1age.world/?platform=page" title="Interactive 1AGE World Page platform" allow="autoplay; fullscreen; gamepad" allowfullscreen loading="eager"></iframe>
-  <div class="holograms" aria-label="1AGE founder profile destinations">
-    <a class="mark" href="https://1age.page/" aria-label="Return to 1AGE Page"><img src="../../shared/1age-logo.svg" alt=""></a>
-    <section class="identity" aria-label="Profile preview">
-      <span class="name">1AGE James</span>
-      <span class="handle">@1agejames</span>
-      <p class="bio">Founder · 1AGEthe3rd Virtual Studio<br>Building a 3D-first ecosystem for discovering Solana and beyond.</p>
+  <main id="page" data-mode="profile">
+    <section class="fallback" aria-label="Founder profile preview">
+      <h1>1AGE James</h1>
+      <p>@1agejames · Founder profile preview</p>
+      <p>Founder · 1AGEthe3rd Virtual Studio. Building a 3D-first discovery ecosystem.</p>
+      <a href="https://github.com/1AGEthe3rd">GitHub · Studio</a>
+      <a href="https://1age.com/">1AGE Search</a>
+      <a href="https://1age.world/">1AGE World</a>
+      <a href="https://1age.plus/">1AGE Plus</a>
+      <a href="../../">1AGE Page</a>
     </section>
-    <nav class="orbit" aria-label="Visit connected destinations">
-      <a class="portal" href="https://1age.com/" title="1AGE Search"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="13" cy="13" r="9"/><path d="m20 20 6 6"/></svg><span>1AGE</span></a>
-      <a class="portal" href="https://1age.world/" title="Enter 1AGE World"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="9"/><ellipse cx="14" cy="14" rx="4" ry="9"/><path d="M5 14h18"/></svg><span>World</span></a>
-      <a class="portal" href="https://github.com/1AGEthe3rd" title="View public development on GitHub"><svg viewBox="0 0 28 28" aria-hidden="true"><path d="M8 22v-4c-2-1-3-3-3-6a9 9 0 0 1 18 0c0 3-1 5-3 6v4M10 24v-5M18 24v-5M10 7l-2-4M18 7l2-4"/></svg><span>GitHub</span></a>
-      <a class="portal" href="https://1age.plus/" title="Explore 1AGE Plus"><svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="10"/><path d="M14 8v12M8 14h12"/></svg><span>Plus</span></a>
-    </nav>
-    <p class="notice">Founder profile preview · @1agejames is not yet a registered or verified Page account.</p>
-  </div>
+  </main>
 </body>
 </html>
