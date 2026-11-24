@@ -5,7 +5,7 @@ export const pageLinks = {
   tools: new URL('application.html', root).href,
   logo: new URL('shared/1age-logo.svg', root).href,
   earthTexture: new URL('shared/world-surface.png', root).href,
-  worldScene: 'https://1age.world/?platform=page',
+  worldScene: 'https://1age.world/?entry=page',
 };
 
 export const founder = {
