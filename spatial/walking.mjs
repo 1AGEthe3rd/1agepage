@@ -6,7 +6,7 @@ export function createWalker(camera,canvas,{radius=10,obstacles=[],spawn=[0,1.68
  const clear=()=>{keys.clear();drag=null;pad={move:{x:0,y:0},look:{x:0,y:0}};};
  subscribeInput(input=>{pad=input;});
  const movementKeys=new Set(['KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight','ShiftLeft','ShiftRight']);
- addEventListener('keydown',e=>{if(paused()||e.target?.closest?.('button,input,select,textarea,a'))return;if(movementKeys.has(e.code)){e.preventDefault();keys.add(e.code);}});
+ addEventListener('keydown',e=>{if(paused()||e.target?.closest?.('input,select,textarea,[contenteditable]'))return;if(e.code.startsWith('Arrow')&&e.target?.closest?.('button,a'))return;if(movementKeys.has(e.code)){e.preventDefault();keys.add(e.code);}});
  addEventListener('keyup',e=>keys.delete(e.code));addEventListener('blur',clear);document.addEventListener('visibilitychange',clear);
  canvas.addEventListener('pointerdown',e=>{if(paused()||drag||e.button!==0)return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,d:0};canvas.setPointerCapture(e.pointerId);});
  canvas.addEventListener('pointermove',e=>{if(!drag||drag.id!==e.pointerId||paused())return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.x=e.clientX;drag.y=e.clientY;drag.d+=Math.hypot(dx,dy);if(drag.d>5){yaw-=dx*.003;pitch-=dy*.003;}});
