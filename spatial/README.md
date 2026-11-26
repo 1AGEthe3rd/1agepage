@@ -15,3 +15,11 @@ Review before any domain cutover:
 - Future: extract the walking controller and visual tokens into a versioned shared module after device review. Do not automatically replace existing HQ controllers.
 
 No production release, DNS changes, authentication changes or financial services in this prototype.
+
+## Build 002 — realism pass
+
+- Reusable architecture.mjs generates stone/metal tile textures, radial ceiling beams, layered window frames and contact shading. Lighting is warm-white inside and cool-blue outside; no shadow maps or external texture downloads added.
+- Improved lounge upholstery, Earth atmospheric shader and front-facing arrival station. The prototype remains procedural; no reference image pixels are copied.
+- Keyboard WASD stays usable after an action button receives focus; arrow keys retain focus navigation when a control is focused.
+- Review the same arrival camera position before and after the update, check glass transparency and shader compilation, then measure frame times and memory on iOS before adopting these assets elsewhere.
+- Production remains unchanged. Visual/device validation is pending.
